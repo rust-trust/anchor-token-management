@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 
 
+
 declare_id!("Dmm6ECKRfM5n1jjjH8ktyBZEnCtg7tSZ321MwqYqxi8C");
 
 #[program]
@@ -29,7 +30,6 @@ pub mod locker_manager {
         period_count: u64,
         reward_kepper: Option<RewardKeeper>,
     ) -> Result<()> {
-        // TODO
 
         Ok(())
     }
@@ -54,7 +54,6 @@ pub struct LockerManagerInfo {
 #[derive(Accounts)]
 pub struct Initialize<'info> {
     pub authority: Signer<'info>,
-
     pub locker_manager_info: Box<Account<'info, LockerManagerInfo>>,
     pub system_program: Program<'info, System>,
 }
@@ -67,7 +66,6 @@ pub struct Auth<'info> {
 
 #[derive(Accounts)]
 pub struct CreateLocker<'info> {
-
     pub locker: Box<Account<'info, Locker>>,
     pub vault: Account<'info, TokenAccount>,
     /// CHECK: This is not dangerous because we don't read or write from this account
@@ -84,7 +82,6 @@ pub struct CreateLocker<'info> {
     vault: Account<'info, TokenAccount>,
     /// CHECK: This is not dangerous because we don't read or write from this account
     locker_vault_authority: AccountInfo<'info>,
-
     token: Account<'info, TokenAccount>,
     token_program: Program<'info, Token>,
     clock: Sysvar<'info, Clock>,

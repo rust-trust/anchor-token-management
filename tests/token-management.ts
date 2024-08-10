@@ -44,5 +44,3 @@ describe("Locker Manager and Pool Manager", () => {
   );
 
   it("Is initialized!", async () => {
-  });
-});

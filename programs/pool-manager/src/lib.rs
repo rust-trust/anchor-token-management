@@ -84,7 +84,6 @@ mod pool_manager {
     pub fn deposit(ctx: Context<Deposit>, amount: u64) -> Result<()> {
         // TODO
 
-
     pub fn stake(ctx: Context<Stake>, pool_token_amount: u64) -> Result<()> {
         // TODO
 
@@ -113,13 +112,10 @@ mod pool_manager {
         expiry_receiver: Pubkey,
         nonce: u8,
     ) -> Result<()> {
-
         Ok(())
     }
 
     pub fn claim_reward(ctx: Context<ClaimReward>) -> Result<()> {
-        // TODO
-
         Ok(())
     }
 
@@ -128,14 +124,10 @@ mod pool_manager {
         _pool_manager_nonce: u64,
         nonce: u8,
     ) -> Result<()> {
-        // TODO
-
         Ok(())
     }
 
     pub fn expire_reward(ctx: Context<ExpireReward>) -> Result<()> {
-        // TODO
-
         Ok(())
     }
 }
@@ -164,7 +156,6 @@ pub struct UpdatePool<'info> {
 #[derive(Accounts)]
 pub struct CreateStaker<'info> {
     pool: Box<Account<'info, Pool>>,
-
     staker: Box<Account<'info, Staker>>,
     beneficiary: Signer<'info>,
     /// CHECK: This is not dangerous because we don't read or write from this account
@@ -224,24 +215,20 @@ pub struct UpdateStaker<'info> {
 
 #[derive(Accounts)]
 pub struct Deposit<'info> {
-
     staker: Box<Account<'info, Staker>>,
     beneficiary: Signer<'info>,
     vault: Account<'info, TokenAccount>,
     /// CHECK: This is not dangerous because we don't read or write from this account
     depositor: AccountInfo<'info>,
-
     depositor_authority: Signer<'info>,
     token_program: Program<'info, Token>,
 }
 
 #[derive(Accounts)]
 pub struct Stake<'info> {
-
     pool: Box<Account<'info, Pool>>,
     reward_event_q: Box<Account<'info, RewardQueue>>,
     pool_mint: Box<Account<'info, Mint>>,
-
     staker: Box<Account<'info, Staker>>,
     beneficiary: Signer<'info>,
     staker_vault: StakerVaultAccounts<'info>,
@@ -255,12 +242,10 @@ pub struct Stake<'info> {
 
 #[derive(Accounts)]
 pub struct StartUnstake<'info> {
-
     pool: Box<Account<'info, Pool>>,
     reward_event_q: Box<Account<'info, RewardQueue>>,
     /// CHECK: This is not dangerous because we don't read or write from this account
     pool_mint: AccountInfo<'info>,
-
     pending_withdrawal: Box<Account<'info, PendingWithdrawal>>,
     staker: Box<Account<'info, Staker>>,
     beneficiary: Signer<'info>,
@@ -291,7 +276,6 @@ pub struct EndUnstake<'info> {
 #[derive(Accounts)]
 pub struct Withdraw<'info> {
     pool: Box<Account<'info, Pool>>,
-
     staker: Box<Account<'info, Staker>>,
     beneficiary: Signer<'info>,
     vault: Account<'info, TokenAccount>,
@@ -304,11 +288,9 @@ pub struct Withdraw<'info> {
 
 #[derive(Accounts)]
 pub struct DropReward<'info> {
-
     pool: Box<Account<'info, Pool>>,
     reward_event_q: Box<Account<'info, RewardQueue>>,
     pool_mint: Account<'info, Mint>,
-
     rewarder: Box<Account<'info, Rewarder>>,
     rewarder_vault: Account<'info, TokenAccount>,
     /// CHECK: This is not dangerous because we don't read or write from this account
@@ -340,12 +322,10 @@ pub struct ClaimRewardToLocker<'info> {
 #[derive(Accounts)]
 pub struct ClaimRewardCommon<'info> {
     pool: Box<Account<'info, Pool>>,
-
     staker: Box<Account<'info, Staker>>,
     beneficiary: Signer<'info>,
     staker_vault_pool_token: Account<'info, TokenAccount>,
     staker_vault_locked_pool_token: Account<'info, TokenAccount>,
-
     rewarder: Box<Account<'info, Rewarder>>,
     /// CHECK: This is not dangerous because we don't read or write from this account
     vault: AccountInfo<'info>,
@@ -358,7 +338,6 @@ pub struct ClaimRewardCommon<'info> {
 #[derive(Accounts)]
 pub struct ExpireReward<'info> {
     pool: Box<Account<'info, Pool>>,
-
     rewarder: Box<Account<'info, Rewarder>>,
     vault: Account<'info, TokenAccount>,
     /// CHECK: This is not dangerous because we don't read or write from this account
@@ -452,4 +431,3 @@ pub enum RewarderKind {
         end_ts: i64,
         period_count: u64,
     },
-}
