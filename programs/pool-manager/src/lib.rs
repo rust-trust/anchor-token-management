@@ -1,5 +1,5 @@
 use anchor_lang::prelude::*;
-use anchor_spl::token::{Token, Mint, TokenAccount};
+
 use std::convert::Into;
 
 declare_id!("4SnEq68n38cyAbyW3RAV6w43ebpJDvmweHfnK5hNrFKV");
@@ -55,19 +55,19 @@ mod pool_manager {
     }
 
     pub fn create_staker(ctx: Context<CreateStaker>, nonce: u8) -> Result<()> {
-        // TODO
+
 
         Ok(())
     }
 
     pub fn update_staker(ctx: Context<UpdateStaker>, metadata: Option<Pubkey>) -> Result<()> {
-        // TODO
+
 
         Ok(())
     }
 
     pub fn update_staker_vault(ctx: Context<UpdateStakerVault>, nonce: u8) -> Result<()> {
-        // TODO
+
 
         Ok(())
     }
@@ -76,7 +76,7 @@ mod pool_manager {
         ctx: Context<UpdateStakerVaultLocked>,
         nonce: u8,
     ) -> Result<()> {
-        // TODO
+
 
         Ok(())
     }
@@ -84,8 +84,6 @@ mod pool_manager {
     pub fn deposit(ctx: Context<Deposit>, amount: u64) -> Result<()> {
         // TODO
 
-        Ok(())
-    }
 
     pub fn stake(ctx: Context<Stake>, pool_token_amount: u64) -> Result<()> {
         // TODO
@@ -100,16 +98,12 @@ mod pool_manager {
     }
 
     pub fn end_unstake(ctx: Context<EndUnstake>) -> Result<()> {
-        // TODO
 
         Ok(())
     }
 
     pub fn withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
         // TODO
-
-        Ok(())
-    }
 
     pub fn drop_reward(
         ctx: Context<DropReward>,
@@ -119,7 +113,6 @@ mod pool_manager {
         expiry_receiver: Pubkey,
         nonce: u8,
     ) -> Result<()> {
-        // TODO
 
         Ok(())
     }
@@ -171,6 +164,7 @@ pub struct UpdatePool<'info> {
 #[derive(Accounts)]
 pub struct CreateStaker<'info> {
     pool: Box<Account<'info, Pool>>,
+
     staker: Box<Account<'info, Staker>>,
     beneficiary: Signer<'info>,
     /// CHECK: This is not dangerous because we don't read or write from this account
@@ -230,20 +224,24 @@ pub struct UpdateStaker<'info> {
 
 #[derive(Accounts)]
 pub struct Deposit<'info> {
+
     staker: Box<Account<'info, Staker>>,
     beneficiary: Signer<'info>,
     vault: Account<'info, TokenAccount>,
     /// CHECK: This is not dangerous because we don't read or write from this account
     depositor: AccountInfo<'info>,
+
     depositor_authority: Signer<'info>,
     token_program: Program<'info, Token>,
 }
 
 #[derive(Accounts)]
 pub struct Stake<'info> {
+
     pool: Box<Account<'info, Pool>>,
     reward_event_q: Box<Account<'info, RewardQueue>>,
     pool_mint: Box<Account<'info, Mint>>,
+
     staker: Box<Account<'info, Staker>>,
     beneficiary: Signer<'info>,
     staker_vault: StakerVaultAccounts<'info>,
@@ -257,10 +255,12 @@ pub struct Stake<'info> {
 
 #[derive(Accounts)]
 pub struct StartUnstake<'info> {
+
     pool: Box<Account<'info, Pool>>,
     reward_event_q: Box<Account<'info, RewardQueue>>,
     /// CHECK: This is not dangerous because we don't read or write from this account
     pool_mint: AccountInfo<'info>,
+
     pending_withdrawal: Box<Account<'info, PendingWithdrawal>>,
     staker: Box<Account<'info, Staker>>,
     beneficiary: Signer<'info>,
@@ -291,6 +291,7 @@ pub struct EndUnstake<'info> {
 #[derive(Accounts)]
 pub struct Withdraw<'info> {
     pool: Box<Account<'info, Pool>>,
+
     staker: Box<Account<'info, Staker>>,
     beneficiary: Signer<'info>,
     vault: Account<'info, TokenAccount>,
@@ -303,9 +304,11 @@ pub struct Withdraw<'info> {
 
 #[derive(Accounts)]
 pub struct DropReward<'info> {
+
     pool: Box<Account<'info, Pool>>,
     reward_event_q: Box<Account<'info, RewardQueue>>,
     pool_mint: Account<'info, Mint>,
+
     rewarder: Box<Account<'info, Rewarder>>,
     rewarder_vault: Account<'info, TokenAccount>,
     /// CHECK: This is not dangerous because we don't read or write from this account
@@ -337,10 +340,12 @@ pub struct ClaimRewardToLocker<'info> {
 #[derive(Accounts)]
 pub struct ClaimRewardCommon<'info> {
     pool: Box<Account<'info, Pool>>,
+
     staker: Box<Account<'info, Staker>>,
     beneficiary: Signer<'info>,
     staker_vault_pool_token: Account<'info, TokenAccount>,
     staker_vault_locked_pool_token: Account<'info, TokenAccount>,
+
     rewarder: Box<Account<'info, Rewarder>>,
     /// CHECK: This is not dangerous because we don't read or write from this account
     vault: AccountInfo<'info>,
@@ -353,6 +358,7 @@ pub struct ClaimRewardCommon<'info> {
 #[derive(Accounts)]
 pub struct ExpireReward<'info> {
     pool: Box<Account<'info, Pool>>,
+
     rewarder: Box<Account<'info, Rewarder>>,
     vault: Account<'info, TokenAccount>,
     /// CHECK: This is not dangerous because we don't read or write from this account

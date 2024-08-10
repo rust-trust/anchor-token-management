@@ -44,8 +44,5 @@ describe("Locker Manager and Pool Manager", () => {
   );
 
   it("Is initialized!", async () => {
-    // Add your test here.
-    const tx = await lockerManager.methods.initialize(new anchor.BN(0)).rpc();
-    console.log("Your transaction signature", tx);
   });
 });
