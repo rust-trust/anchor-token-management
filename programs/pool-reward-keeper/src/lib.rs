@@ -13,25 +13,7 @@ mod pool_reward_keeper {
         locker: Locker,
         staker_data: StakerData,
     ) -> Result<()> {
-        // Secutiry Check
-        assert!(staker_data.staker_vault_pool_token == *ctx.accounts.staker_vault_pool_token.to_account_info().key);
-        assert!(
-            staker_data.staker_vault_locked_pool_token
-                == *ctx.accounts.staker_vault_locked_pool_token.to_account_info().key
-        );
-
-        if let Some(reward_keeper) = &locker.reward_keeper {
-            if &reward_keeper.metadata != ctx.accounts.staker.to_account_info().key {
-                return Err(ErrorCode::InvalidRewardKeeperMetadata.into());
-            }
-            // assert!(ctx.accounts.staker.beneficiary == v.beneficiary);
-            assert!(staker_data.beneficiary == locker.beneficiary);
-            let total_staked =
-                ctx.accounts.staker_vault_pool_token.amount + ctx.accounts.staker_vault_locked_pool_token.amount;
-            if total_staked != 0 {
-                return Err(ErrorCode::UnreleasedReward.into());
-            }
-        }
+        // TODO
 
         Ok(())
     }
@@ -84,12 +66,4 @@ pub struct Locker {
 pub struct PoolRewardKeeper {
     pub program: Pubkey,
     pub metadata: Pubkey,
-}
-
-#[error_code]
-pub enum ErrorCode {
-    #[msg("Locked rewards cannot be released until one unstaked all tokens.")]
-    UnreleasedReward,
-    #[msg("The given staker account does not match the reward keeper metadata.")]
-    InvalidRewardKeeperMetadata,
 }
